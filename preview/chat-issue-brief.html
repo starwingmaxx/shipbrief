@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ShipBrief — Rovo chat preview (work item brief)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #e9ebee; color: #172b4d; }
+  .panel { width: 460px; margin: 0 auto; background: #fff; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 0 1px #dfe1e6; }
+  .header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid #dfe1e6; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #0052cc, #6554c0); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .header .name { font-weight: 600; font-size: 15px; }
+  .header .sub { font-size: 12px; color: #5e6c84; }
+  .header .badge { margin-left: auto; font-size: 11px; color: #0052cc; background: #deebff; border-radius: 3px; padding: 2px 6px; font-weight: 600; }
+  .chat { padding: 16px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .msg-user { align-self: flex-end; background: #0052cc; color: #fff; border-radius: 12px 12px 2px 12px; padding: 9px 12px; max-width: 85%; font-size: 13.5px; line-height: 1.45; }
+  .msg-agent { align-self: flex-start; background: #f4f5f7; border-radius: 12px 12px 12px 2px; padding: 12px 14px; max-width: 96%; font-size: 13.5px; line-height: 1.55; }
+  .msg-agent h4 { font-size: 13px; margin: 12px 0 6px; color: #172b4d; }
+  .msg-agent h4:first-child { margin-top: 0; }
+  .msg-agent ul { margin-left: 18px; }
+  .msg-agent li { margin: 4px 0; }
+  .msg-agent a { color: #0052cc; text-decoration: none; font-weight: 600; }
+  .meta { color: #5e6c84; font-size: 12px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 3px; padding: 1px 5px; vertical-align: 1px; }
+  .tag-blocker { background: #ffebe6; color: #bf2600; }
+  .tag-status { background: #eae6ff; color: #403294; }
+  .input { border-top: 1px solid #dfe1e6; padding: 12px 16px; display: flex; gap: 8px; align-items: center; }
+  .input .box { flex: 1; border: 1px solid #dfe1e6; border-radius: 8px; padding: 9px 12px; color: #8993a4; font-size: 13.5px; }
+  .input .send { width: 32px; height: 32px; border-radius: 50%; background: #0052cc; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .foot { padding: 6px 16px 12px; font-size: 11px; color: #8993a4; text-align: center; }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="header">
+    <div class="avatar">🚢</div>
+    <div>
+      <div class="name">ShipBrief</div>
+      <div class="sub">Release readiness, briefed from Jira + Teamwork Graph</div>
+    </div>
+    <div class="badge">AGENT</div>
+  </div>
+
+  <div class="chat">
+    <div class="msg-user">Brief me on NOVA-412 — who is involved, what is blocking it, and which goals does it serve?</div>
+
+    <div class="msg-agent">
+      <h4><a href="#">NOVA-412</a> Payment webhook retries exhaust the queue</h4>
+      <p><span class="tag tag-status">IN REVIEW</span> <span class="tag tag-blocker">BLOCKER</span> · Open 9 days · Last update 2 days ago · Subtasks 3 of 4 done</p>
+
+      <h4>What is blocking it</h4>
+      <ul>
+        <li><a href="#">NOVA-389</a> “Idempotency keys for webhook deliveries” — In Progress, A. Tanaka. NOVA-412 can only ship after this lands.</li>
+      </ul>
+
+      <h4>People involved</h4>
+      <ul>
+        <li>Assignee: <b>A. Tanaka</b> (Payments team) · Reporter: <b>J. Okafor</b></li>
+        <li>Most active commenters (90 days): A. Tanaka (6), M. Chen (3), J. Okafor (2)</li>
+      </ul>
+
+      <h4>Goals it serves (Teamwork Graph)</h4>
+      <ul>
+        <li>“Checkout reliability — zero lost payments in Q3”</li>
+        <li>“Payments platform modernisation”</li>
+      </ul>
+
+      <h4>Recommended next actions</h4>
+      <ul>
+        <li>1. Ask A. Tanaka for an ETA on NOVA-389 — everything else on this item is review-ready.</li>
+        <li>2. Loop in M. Chen: she raised the retry-storm edge case in the comments.</li>
+      </ul>
+      <p class="meta">Sources: Jira REST (issue, links, comments) + Teamwork Graph (people, goals). All sources read successfully.</p>
+    </div>
+  </div>
+
+  <div class="input"><div class="box">Ask ShipBrief…</div><div class="send">↑</div></div>
+  <div class="foot">Design preview with sample data — ShipBrief for Codegeist 2026</div>
+</div>
+</body>
+</html>

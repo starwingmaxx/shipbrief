@@ -1,0 +1,97 @@
+modules:
+  rovo:agent:
+    - key: shipbrief-agent
+      name: ShipBrief
+      description: Briefs software teams on release readiness using Jira and Teamwork Graph.
+      prompt: resource:agent-prompt;prompt.md
+      conversationStarters:
+        - What is blocking our release?
+        - Brief me on a Jira work item.
+        - What work has gone stale in my project?
+      actions:
+        - get-release-blockers
+        - get-issue-brief
+        - get-stale-work
+        - get-work-item-people
+      followUpPrompt: Suggest a follow-up brief on a blocker or its people and goals.
+  action:
+    - key: get-release-blockers
+      name: Get release blockers
+      function: releaseBlockers
+      actionVerb: GET
+      description: What is blocking the release for a Jira project or fix version?
+      inputs:
+        projectKey:
+          title: Project key
+          type: string
+          required: true
+          description: Jira project key.
+        fixVersion:
+          title: Fix version
+          type: string
+          required: false
+          description: Jira fix version name to filter by.
+    - key: get-issue-brief
+      name: Get issue brief
+      function: issueBrief
+      actionVerb: GET
+      description: What is the status and recent activity of one Jira work item?
+      inputs:
+        issueKey:
+          title: Issue key
+          type: string
+          required: true
+          description: Jira work item key.
+    - key: get-stale-work
+      name: Get stale work
+      function: staleWork
+      actionVerb: GET
+      description: Which unresolved work items in a Jira project have gone stale?
+      inputs:
+        projectKey:
+          title: Project key
+          type: string
+          required: true
+          description: Jira project key.
+        staleDays:
+          title: Stale days
+          type: integer
+          required: false
+          description: Minimum days since the last update. Defaults to 14.
+    - key: get-work-item-people
+      name: Get work item people and goals
+      function: workItemPeople
+      actionVerb: GET
+      description: Who is involved in this Jira work item and which goals does it serve?
+      inputs:
+        issueKey:
+          title: Issue key
+          type: string
+          required: false
+          description: Jira work item key. Defaults to the work item on screen.
+  function:
+    - key: releaseBlockers
+      handler: index.releaseBlockers
+    - key: issueBrief
+      handler: index.issueBrief
+    - key: staleWork
+      handler: index.staleWork
+    - key: workItemPeople
+      handler: index.workItemPeople
+resources:
+  - key: agent-prompt
+    path: prompts
+permissions:
+  scopes:
+    - read:jira-work
+    - read:jira-user
+    - read:graph:issue:jira
+    - read:graph:issue-status:jira
+    - read:graph:issue-comment:jira
+    - read:graph:user:atlassian
+    - read:graph:team:atlassian
+    - read:graph:goal:atlassian
+# The app id is added later by forge register.
+app:
+  runtime:
+    name: nodejs22.x
